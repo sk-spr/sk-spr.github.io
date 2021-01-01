@@ -5,11 +5,14 @@
   <body style="margin : 0px; overflow: hidden;">
     <a-scene embedded arjs>
       <a-marker preset="hiro">
-        <a-entity
+          <a-obj-model
+          src="shadercube.obj"
+          mtl="shadercube.mtl"
           position="0 0 0"
-          scale="0.05 0.05 0.05"
-          obj-model="shadercube.obj"
-        ></a-entity>
+          scale="1 1 1"
+          >
+              
+          </a-obj-model>
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
