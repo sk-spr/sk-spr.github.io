@@ -10,4 +10,23 @@
 </head>
 <body style="margin : 0px; overflow: hidden;">
     <div class="arjs-loader">Loading, please wait</div>
+    <a-scene vr-mode-ui="enabled: false;"
+        renderer="logaritmicDepthBuffer: true;"
+        embedded
+        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: true;">
+        <a-nft type="nft"
+            url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/trex-image/trex"
+            smooth="true"
+            smoothCount="10"
+            smoothTolerance="0.1"
+            smoothThreshold="5">
+            <a-entity gltf-model="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf"
+            scale="5 5 5"
+            position="50 150 0">
+
+            </a-entity>
+
+        </a-nft>
+
+    </a-scene>
 </body>
