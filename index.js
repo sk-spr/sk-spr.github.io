@@ -1,64 +1,88 @@
 console.log("index.js loaded")
-var scene, camera, renderer, clock, deltaTime, totalTime, keyboard;
+var scene, camera, renderer, clock, deltaTime, totalTime;
 
 var arToolkitSource, arToolkitContext;
 
 var markerRoot1;
 
-var sceneGroup;
-
 var mesh1;
 
-initialize()
-animate()
+initialize();
+animate();
 
-function initialize(){
-    scene = new THREE.scene()
-    let ambientLight = new THREE.ambientLight(0xccccc, 1.0)
-    scene.add(ambientLight)
-    camera = new THREE.camera()
-    scene.add(camera)
-    renderer = new THREE.WebGLRenderer({
-        antialias:true,
-        alpha:true
-    })
-    renderer.setClearColor(new THREE.color(lightgray))
-    renderer.setSize(640, 480)
-    renderer.domElement.style.position = 'absolute'
-    renderer.domElement.style.top = '0px'
-    renderer.domElement.style.left = '0px'
-    document.body.appendChild(renderer.domElement)
+function initialize()
+{
+	scene = new THREE.Scene();
 
-    clock = new THREE.clock()
-    deltaTime = 0
-    totalTime = 0
-    keyboard = new Keyboard()
+	let ambientLight = new THREE.AmbientLight( 0xcccccc, 1.0 );
+	scene.add( ambientLight );
+				
+	camera = new THREE.Camera();
+	scene.add(camera);
 
-    //set up artoolkit source
-    arToolkitSource = new THREEx.ArToolkitSource({
-        sourceType: 'webcam',
-    })
-    function onResize(){
-        arToolkitSource.resize()
-        arToolkitSource.copySizeTo(renderer.domElement)
-        if(arToolkitContext.arController != null )
-            arToolkitSource.copySizeTo(arToolkitContext.arController.canvas)
-    }
-    arToolkitSource.init(function onReady(){
-        onResize()
-    })
-    window.addEventListener('resize', function(){onResize()})
+	renderer = new THREE.WebGLRenderer({
+		antialias : true,
+		alpha: true
+	});
+	renderer.setClearColor(new THREE.Color('lightgrey'), 0)
+	renderer.setSize( 640, 480 );
+	renderer.domElement.style.position = 'absolute'
+	renderer.domElement.style.top = '0px'
+	renderer.domElement.style.left = '0px'
+	document.body.appendChild( renderer.domElement );
 
-    //setup artoolkit context
-    arToolkitContext = new THREEx.ArToolkitContext({
-        cameraParametersUrl: 'data/camera_para.dat',
-        detectionMode: 'mono'
-    })
-    arToolkitContext.init(function onCompleted(){
-        camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix())
-    })
-    //setup marker roots
-    markerRoot1 = new THREE.Group();
+	clock = new THREE.Clock();
+	deltaTime = 0;
+	totalTime = 0;
+	
+	////////////////////////////////////////////////////////////
+	// setup arToolkitSource
+	////////////////////////////////////////////////////////////
+
+	arToolkitSource = new THREEx.ArToolkitSource({
+		sourceType : 'webcam',
+	});
+
+	function onResize()
+	{
+		arToolkitSource.onResize()	
+		arToolkitSource.copySizeTo(renderer.domElement)	
+		if ( arToolkitContext.arController !== null )
+		{
+			arToolkitSource.copySizeTo(arToolkitContext.arController.canvas)	
+		}	
+	}
+
+	arToolkitSource.init(function onReady(){
+		onResize()
+	});
+	
+	// handle resize event
+	window.addEventListener('resize', function(){
+		onResize()
+	});
+	
+	////////////////////////////////////////////////////////////
+	// setup arToolkitContext
+	////////////////////////////////////////////////////////////	
+
+	// create atToolkitContext
+	arToolkitContext = new THREEx.ArToolkitContext({
+		cameraParametersUrl: 'data/camera_para.dat',
+		detectionMode: 'mono'
+	});
+	
+	// copy projection matrix to camera when initialization complete
+	arToolkitContext.init( function onCompleted(){
+		camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
+	});
+
+	////////////////////////////////////////////////////////////
+	// setup markerRoots
+	////////////////////////////////////////////////////////////
+
+	// build markerControls
+	markerRoot1 = new THREE.Group();
 	markerRoot1.name = 'marker1';
 	scene.add(markerRoot1);
 	let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
@@ -66,7 +90,8 @@ function initialize(){
 		patternUrl : "data/hiro.patt",
 	})
 
-    let geometry1	= new THREE.CubeGeometry(2,2,2);
+	// the inside of the hole
+	let geometry1	= new THREE.CubeGeometry(2,2,2);
 	let loader = new THREE.TextureLoader();
 	let texture = loader.load( 'images/tiles.jpg', render );
 	let material1	= new THREE.MeshLambertMaterial({
@@ -94,21 +119,26 @@ function initialize(){
 	
 	mesh0.rotation.x = -Math.PI/2;
 	markerRoot1.add(mesh0);	
-
-
 }
+
+
 function update()
 {
 	// update artoolkit on every frame
 	if ( arToolkitSource.ready !== false )
 		arToolkitContext.update( arToolkitSource.domElement );
 }
-function render(){
-    renderer.render( scene, camera );
+
+
+function render()
+{
+	renderer.render( scene, camera );
 }
 
-function animate(){
-    requestAnimationFrame(animate);
+
+function animate()
+{
+	requestAnimationFrame(animate);
 	deltaTime = clock.getDelta();
 	totalTime += deltaTime;
 	update();
