@@ -8,6 +8,7 @@ var markerRoot1;
 var mesh1;
 
 initialize();
+onResize();
 animate();
 
 function initialize()
