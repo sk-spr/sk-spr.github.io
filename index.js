@@ -68,7 +68,7 @@ function initialize()
 
 	// create atToolkitContext
 	arToolkitContext = new THREEx.ArToolkitContext({
-		cameraParametersUrl: 'data/camera_para.dat',
+		cameraParametersUrl: '/data/camera_para.dat',
 		detectionMode: 'mono'
 	});
 	
@@ -87,13 +87,13 @@ function initialize()
 	scene.add(markerRoot1);
 	let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
 		type : 'pattern',
-		patternUrl : "data/hiro.patt",
+		patternUrl : "/data/hiro.patt",
 	})
 
 	// the inside of the hole
 	let geometry1	= new THREE.CubeGeometry(2,2,2);
 	let loader = new THREE.TextureLoader();
-	let texture = loader.load( 'images/tiles.jpg', render );
+	let texture = loader.load( '/images/tiles.jpg', render );
 	let material1	= new THREE.MeshLambertMaterial({
 		transparent : true,
 		map: texture,
