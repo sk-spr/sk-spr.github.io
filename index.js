@@ -8,7 +8,6 @@ var markerRoot1;
 var mesh1;
 
 initialize();
-onResize();
 animate();
 
 function initialize()
@@ -120,6 +119,8 @@ function initialize()
 	
 	mesh0.rotation.x = -Math.PI/2;
 	markerRoot1.add(mesh0);	
+
+	onResize();
 }
 
 
