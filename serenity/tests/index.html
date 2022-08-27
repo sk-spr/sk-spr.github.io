@@ -12,6 +12,7 @@
     <script type="text/javascript">
         const container = document.getElementById("container");
         const template = document.getElementById("template");
+        container.removeChild(container.content.firstChild);
         container.appendChild(template.content.cloneNode(true));
     </script>
 </body>
