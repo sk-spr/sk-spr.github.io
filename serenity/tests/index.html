@@ -3,10 +3,9 @@
     <title>LibWeb test - text/template</title>
 </head>
 <body>
-    <script type="text/template">
-        let template = document.querySelector("#script-template").innerHTML;
-        document.querySelector("#insertTemplate").innerHTML = template;
-    </script>
+    <template id="template">
+        This text should appear.
+    </template>
 
     <h2>Seen in the wild at <a href="https://www.orf.at">ORF(Austrian national broadcaster)</a></h2>
     <span id="script-template"><h2>this should appear twice.</h2></span>
