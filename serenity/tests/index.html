@@ -4,11 +4,15 @@
 </head>
 <body>
     <template id="template">
-        This text should appear.
+        This text should appear after the heading.
     </template>
 
     <h2>Seen in the wild at <a href="https://www.orf.at">ORF(Austrian national broadcaster)</a></h2>
-    <span id="script-template"><h2>this should appear twice.</h2></span>
-    <span id="insertTemplate"></span>
+    <span id="container"> You should not see this text.</span>
+    <script type="text/javascript">
+        const container = document.getElementById("container");
+        const template = document.getElementById("template");
+        container.appendChild(template.content.cloneNode(true));
+    </script>
 </body>
 </html>
